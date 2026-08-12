@@ -27,6 +27,16 @@
 
   html{scroll-behavior:smooth;}
 
+  .sr-only{
+    position:absolute;
+    width:1px; height:1px;
+    padding:0; margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
@@ -397,10 +407,220 @@
   }
   .risk-row p{ color:var(--muted); font-size:15px; }
 
-  section#risicos{ border-bottom:none; }
   section#risicos .section-head .tag-num{ color:var(--warn); }
   section#risicos .eyebrow::before{ background:var(--warn); box-shadow:0 0 8px var(--warn); }
   section#risicos .eyebrow{ color:var(--warn); }
+
+  /* ---------- Testdata via screenshot ---------- */
+  section#testdata{ border-bottom:none; }
+
+  .apikey-row{ margin-top:24px; }
+  .apikey-row label{
+    display:block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+    margin-bottom:8px;
+  }
+  .apikey-row input[type="password"]{
+    width:100%;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    padding:11px 12px;
+    border-radius:var(--radius);
+  }
+  .apikey-row input[type="password"]:focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:2px;
+    border-color:var(--signal-dim);
+  }
+  .apikey-hint{
+    margin-top:8px;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  .dropzone{
+    border:1px dashed var(--line);
+    background:var(--panel-2);
+    border-radius:var(--radius);
+    padding:40px 24px;
+    text-align:center;
+    cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .dropzone:hover, .dropzone:focus-visible{
+    border-color:var(--signal-dim);
+    background:rgba(94,234,212,0.04);
+    outline:none;
+  }
+  .dropzone.drag-over{
+    border-color:var(--signal);
+    background:rgba(94,234,212,0.08);
+  }
+  .dz-icon{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:20px;
+    color:var(--signal);
+    width:40px; height:40px;
+    margin:0 auto 12px;
+    border:1px solid var(--signal-dim);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .dz-text{ color:var(--text); font-size:14.5px; }
+  .dz-link{ color:var(--signal); text-decoration:underline; }
+  .dz-sub{ margin-top:6px; color:var(--muted); font-size:12.5px; font-family:'IBM Plex Mono', monospace; }
+
+  .preview{ margin-top:16px; }
+  .preview img{
+    max-width:100%;
+    max-height:240px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    display:block;
+    object-fit:contain;
+  }
+
+  .btn-ghost{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.03em;
+    color:var(--signal);
+    background:transparent;
+    border:1px solid var(--signal-dim);
+    padding:8px 14px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    margin-top:12px;
+  }
+  .btn-ghost:hover{ background:rgba(94,234,212,0.08); }
+  .btn-ghost:disabled{ opacity:0.5; cursor:not-allowed; }
+
+  .td-status{
+    margin-top:28px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--signal);
+    display:flex; align-items:center; gap:10px;
+  }
+  .td-status::before{
+    content:"";
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 8px var(--signal);
+    animation:pulse-dot 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+
+  .td-error{
+    margin-top:28px;
+    border:1px solid var(--warn-dim);
+    background:rgba(245,158,11,0.06);
+    color:var(--warn);
+    padding:16px 18px;
+    border-radius:var(--radius);
+    font-size:14px;
+  }
+  .td-error .mark{
+    font-family:'IBM Plex Mono', monospace;
+    margin-right:8px;
+  }
+
+  .td-result{ margin-top:36px; }
+  .td-result-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px; gap:16px; flex-wrap:wrap;
+  }
+  .td-result-head .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--signal);
+    letter-spacing:0.04em;
+  }
+  .td-result-head .btn-ghost{ margin-top:0; }
+
+  .td-table-wrap{
+    border:1px solid var(--line);
+    overflow-x:auto;
+  }
+  .td-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+    min-width:420px;
+  }
+  .td-table th{
+    text-align:left;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:10px 14px;
+    border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+  }
+  .td-table td{
+    padding:0;
+    border-bottom:1px solid var(--line);
+  }
+  .td-table tr:last-child td{ border-bottom:none; }
+  .td-table td:last-child{ width:1%; white-space:nowrap; }
+  .td-table input[type="text"]{
+    width:100%;
+    background:transparent;
+    border:none;
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14px;
+    padding:10px 14px;
+  }
+  .td-table input[type="text"]:focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:-2px;
+    background:rgba(94,234,212,0.05);
+  }
+  .td-table .row-remove{
+    background:transparent;
+    border:none;
+    color:var(--muted);
+    cursor:pointer;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    padding:8px 14px;
+  }
+  .td-table .row-remove:hover{ color:var(--warn); }
+
+  .td-raw{
+    margin-top:28px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    padding:16px 18px;
+    border-radius:var(--radius);
+  }
+  .td-raw .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+    display:block;
+    margin-bottom:10px;
+  }
+  .td-raw pre{
+    white-space:pre-wrap;
+    word-break:break-word;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--text);
+    max-height:280px;
+    overflow-y:auto;
+  }
 
   /* ---------- Footer ---------- */
   footer{
@@ -439,6 +659,7 @@
       <a href="#werkwijze">Werkwijze</a>
       <a href="#oplevering">Oplevering</a>
       <a href="#risicos">Risico's</a>
+      <a href="#testdata">Testdata</a>
     </nav>
   </div>
 </header>
@@ -628,6 +849,63 @@
       </div>
     </div>
   </section>
+
+  <section id="testdata" class="wrap reveal">
+    <div class="section-head">
+      <h2>Testdata via screenshot</h2>
+      <span class="tag-num">06 / extractie</span>
+    </div>
+    <div class="split">
+      <div>
+        <p>Upload een screenshot van een dashboard of rapport en laat Claude de zichtbare metrics automatisch uitlezen. Het resultaat verschijnt in een bewerkbare tabel, zodat je fouten kan corrigeren voordat je de cijfers verder gebruikt.</p>
+        <p>Dit draait volledig client-side: de afbeelding gaat direct van je browser naar de Anthropic API, er is geen eigen backend of opslag bij tussen.</p>
+        <div class="apikey-row">
+          <label for="apiKeyInput">Anthropic API key</label>
+          <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+          <p class="apikey-hint">Wordt alleen bewaard in sessionStorage (verdwijnt zodra je dit tabblad sluit) — niet in localStorage en nergens hardcoded.</p>
+        </div>
+      </div>
+      <div>
+        <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload een screenshot (PNG of JPG)">
+          <input type="file" id="fileInput" accept="image/png,image/jpeg" hidden>
+          <div class="dz-icon">↑</div>
+          <p class="dz-text">Sleep een screenshot hierheen of <span class="dz-link">kies een bestand</span></p>
+          <p class="dz-sub">PNG of JPG</p>
+        </div>
+        <div id="preview" class="preview" hidden>
+          <img id="previewImg" alt="Voorbeeld van de geüploade screenshot">
+          <button type="button" id="clearImgBtn" class="btn-ghost">Andere afbeelding kiezen</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="testdataStatus" class="td-status" role="status" hidden></div>
+    <div id="testdataError" class="td-error" role="alert" hidden></div>
+
+    <div id="testdataResult" class="td-result" hidden>
+      <div class="td-result-head">
+        <span class="label">RESULTAAT — bewerkbaar</span>
+        <button type="button" id="addRowBtn" class="btn-ghost">+ Rij toevoegen</button>
+      </div>
+      <div class="td-table-wrap">
+        <table class="td-table" id="tdTable">
+          <thead>
+            <tr>
+              <th scope="col">Label</th>
+              <th scope="col">Waarde</th>
+              <th scope="col"><span class="sr-only">Acties</span></th>
+            </tr>
+          </thead>
+          <tbody id="tdTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="rawFallback" class="td-raw" hidden>
+      <span class="label">RUWE RESPONSE (kon niet als JSON worden geparsed)</span>
+      <pre id="rawText"></pre>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -654,6 +932,282 @@
       });
     }, { threshold: 0.12 });
     items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+<script>
+  // Testdata via screenshot — vanilla JS, calls the Anthropic API directly from the browser.
+  (function(){
+    var STORAGE_KEY = 'anthropic_api_key';
+    var MODEL = 'claude-sonnet-4-6';
+
+    var apiKeyInput = document.getElementById('apiKeyInput');
+    var dropzone = document.getElementById('dropzone');
+    var fileInput = document.getElementById('fileInput');
+    var preview = document.getElementById('preview');
+    var previewImg = document.getElementById('previewImg');
+    var clearImgBtn = document.getElementById('clearImgBtn');
+    var statusEl = document.getElementById('testdataStatus');
+    var errorEl = document.getElementById('testdataError');
+    var resultEl = document.getElementById('testdataResult');
+    var tableBody = document.getElementById('tdTableBody');
+    var addRowBtn = document.getElementById('addRowBtn');
+    var rawFallback = document.getElementById('rawFallback');
+    var rawText = document.getElementById('rawText');
+
+    if(!apiKeyInput || !dropzone || !fileInput) return; // section not present on this page
+
+    function hide(el){ el.hidden = true; }
+    function show(el){ el.hidden = false; }
+
+    function escapeHtml(str){
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // --- API key: sessionStorage only, never localStorage, never hardcoded ---
+    try {
+      var storedKey = sessionStorage.getItem(STORAGE_KEY);
+      if(storedKey) apiKeyInput.value = storedKey;
+    } catch(e){ /* sessionStorage unavailable (e.g. private browsing) — key just won't persist */ }
+
+    apiKeyInput.addEventListener('input', function(){
+      try { sessionStorage.setItem(STORAGE_KEY, apiKeyInput.value); } catch(e){ /* ignore */ }
+    });
+
+    function resetOutputs(){
+      hide(statusEl); hide(errorEl); hide(resultEl); hide(rawFallback);
+      statusEl.textContent = '';
+      tableBody.innerHTML = '';
+    }
+
+    function showStatus(message){
+      hide(errorEl);
+      statusEl.textContent = message;
+      show(statusEl);
+    }
+
+    function showError(message){
+      hide(statusEl); hide(resultEl); hide(rawFallback);
+      errorEl.innerHTML = '<span class="mark">!</span>' + message;
+      show(errorEl);
+    }
+
+    // --- Dropzone interactions ---
+    dropzone.addEventListener('click', function(){ fileInput.click(); });
+    dropzone.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        fileInput.click();
+      }
+    });
+    dropzone.addEventListener('dragover', function(e){
+      e.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+    dropzone.addEventListener('dragleave', function(){
+      dropzone.classList.remove('drag-over');
+    });
+    dropzone.addEventListener('drop', function(e){
+      e.preventDefault();
+      dropzone.classList.remove('drag-over');
+      if(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]){
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+    fileInput.addEventListener('change', function(){
+      if(fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]);
+    });
+    clearImgBtn.addEventListener('click', function(){
+      fileInput.value = '';
+      hide(preview);
+      resetOutputs();
+    });
+
+    function handleFile(file){
+      resetOutputs();
+
+      var validTypes = ['image/png', 'image/jpeg'];
+      if(validTypes.indexOf(file.type) === -1){
+        showError('Alleen PNG- of JPG-bestanden worden ondersteund.');
+        return;
+      }
+
+      var apiKey = apiKeyInput.value.trim();
+      if(!apiKey){
+        showError('Vul eerst je Anthropic API key in hierboven.');
+        return;
+      }
+
+      var reader = new FileReader();
+      reader.onload = function(){
+        var dataUrl = reader.result;
+        previewImg.src = dataUrl;
+        show(preview);
+
+        var base64 = String(dataUrl).split(',')[1];
+        if(!base64){
+          showError('Kon de afbeelding niet omzetten naar base64.');
+          return;
+        }
+        extractMetrics(base64, file.type, apiKey);
+      };
+      reader.onerror = function(){
+        showError('Kon het bestand niet lezen. Probeer het opnieuw.');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function extractMetrics(base64Data, mediaType, apiKey){
+      showStatus('Screenshot wordt geanalyseerd door Claude…');
+
+      var prompt = 'Kijk naar deze screenshot van een dashboard of rapport en extraheer alle zichtbare metrics/cijfers (bijvoorbeeld KPI\'s, percentages, aantallen, bedragen, trends). ' +
+        'Geef het resultaat terug als uitsluitend een JSON-array, zonder uitleg en zonder markdown-codeblok eromheen. ' +
+        'Elk element heeft exact dit formaat: {"label": "...", "value": "..."}. ' +
+        'Gebruik de labels zoals ze in de screenshot staan. Als er geen metrics zichtbaar zijn, geef dan een lege array [] terug.';
+
+      fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          max_tokens: 2048,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'image',
+                source: { type: 'base64', media_type: mediaType, data: base64Data }
+              },
+              { type: 'text', text: prompt }
+            ]
+          }]
+        })
+      })
+      .then(function(response){
+        return response.json()
+          .catch(function(){ return null; })
+          .then(function(json){
+            if(!response.ok){
+              var apiMsg = (json && json.error && json.error.message)
+                ? json.error.message
+                : ('HTTP ' + response.status + ' ' + response.statusText);
+              if(response.status === 401){
+                apiMsg = 'Ongeldige of ontbrekende API key (401). Controleer de key hierboven.';
+              } else if(response.status === 403){
+                apiMsg = 'Toegang geweigerd (403) — controleer of deze API key rechten heeft.';
+              } else if(response.status === 429){
+                apiMsg = 'Rate limit bereikt (429) — probeer het straks opnieuw.';
+              }
+              throw new Error(apiMsg);
+            }
+            if(!json){
+              throw new Error('Onverwachte (niet-JSON) response van de API.');
+            }
+            return json;
+          });
+      })
+      .then(function(data){
+        hide(statusEl);
+        var blocks = data && data.content ? data.content : [];
+        var textBlock = null;
+        for(var i = 0; i < blocks.length; i++){
+          if(blocks[i].type === 'text'){ textBlock = blocks[i]; break; }
+        }
+        var rawResponseText = textBlock ? textBlock.text : '';
+        var parsed = tryParseMetrics(rawResponseText);
+
+        if(parsed){
+          renderTable(parsed);
+        } else {
+          showRaw(rawResponseText || JSON.stringify(data, null, 2));
+        }
+      })
+      .catch(function(err){
+        var msg = (err && err.message) ? err.message : String(err);
+        if(msg === 'Failed to fetch' || /NetworkError|Load failed|TypeError/i.test(msg)){
+          msg = 'Netwerk- of CORS-fout: kan de Anthropic API niet bereiken vanuit de browser. Controleer je internetverbinding, of de API key klopt, en of er geen browserextensie/firewall het verzoek blokkeert.';
+        }
+        showError('Extractie mislukt: ' + escapeHtml(msg));
+      });
+    }
+
+    function tryParseMetrics(text){
+      if(!text) return null;
+      var cleaned = String(text).trim();
+
+      // Strip a ```json ... ``` fence if the model added one despite the instruction not to.
+      var fenceMatch = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/i);
+      if(fenceMatch) cleaned = fenceMatch[1].trim();
+
+      try {
+        var data = JSON.parse(cleaned);
+        if(!Array.isArray(data)) return null;
+        return data.map(function(item){
+          return {
+            label: (item && item.label != null) ? String(item.label) : '',
+            value: (item && item.value != null) ? String(item.value) : ''
+          };
+        });
+      } catch(e){
+        return null;
+      }
+    }
+
+    function renderTable(rows){
+      tableBody.innerHTML = '';
+      if(rows.length === 0){
+        addRow('', '');
+      } else {
+        rows.forEach(function(row){ addRow(row.label, row.value); });
+      }
+      show(resultEl);
+    }
+
+    function addRow(label, value){
+      var tr = document.createElement('tr');
+
+      var labelTd = document.createElement('td');
+      var labelInput = document.createElement('input');
+      labelInput.type = 'text';
+      labelInput.value = label || '';
+      labelInput.setAttribute('aria-label', 'Label');
+      labelTd.appendChild(labelInput);
+
+      var valueTd = document.createElement('td');
+      var valueInput = document.createElement('input');
+      valueInput.type = 'text';
+      valueInput.value = value || '';
+      valueInput.setAttribute('aria-label', 'Waarde');
+      valueTd.appendChild(valueInput);
+
+      var actionTd = document.createElement('td');
+      var removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'row-remove';
+      removeBtn.textContent = '✕';
+      removeBtn.setAttribute('aria-label', 'Rij verwijderen');
+      removeBtn.addEventListener('click', function(){ tr.remove(); });
+      actionTd.appendChild(removeBtn);
+
+      tr.appendChild(labelTd);
+      tr.appendChild(valueTd);
+      tr.appendChild(actionTd);
+      tableBody.appendChild(tr);
+    }
+
+    addRowBtn.addEventListener('click', function(){ addRow('', ''); });
+
+    function showRaw(text){
+      rawText.textContent = text;
+      show(rawFallback);
+    }
   })();
 </script>
 
