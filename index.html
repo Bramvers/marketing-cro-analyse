@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRO Analytics — Intern overzicht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1220;
+    --panel:#131B2E;
+    --panel-2:#0F1728;
+    --line:#22304A;
+    --text:#E8ECF4;
+    --muted:#8B96AC;
+    --signal:#5EEAD4;
+    --signal-dim:#2C5A55;
+    --warn:#F59E0B;
+    --warn-dim:#4A3618;
+    --radius:2px;
+    --maxw:920px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--signal); color:var(--ink); }
+
+  a{ color:var(--signal); }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- Eyebrow / labels ---------- */
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--signal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px; height:7px;
+    background:var(--signal);
+    border-radius:50%;
+    box-shadow:0 0 8px var(--signal);
+    flex-shrink:0;
+  }
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--text);
+  }
+
+  /* ---------- Nav ---------- */
+  header.top{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,18,32,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  header.top .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:56px;
+  }
+  .brand{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+  }
+  .brand strong{ color:var(--text); }
+  nav.top-links{
+    display:flex; gap:22px;
+  }
+  nav.top-links a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    text-decoration:none;
+    letter-spacing:0.04em;
+  }
+  nav.top-links a:hover{ color:var(--signal); }
+  nav.top-links a:focus-visible, a:focus-visible, button:focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+  }
+  @media (max-width:640px){
+    nav.top-links{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:96px 0 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero h1{
+    font-size:clamp(34px, 5.4vw, 54px);
+    line-height:1.08;
+    max-width:15ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--signal);
+  }
+  .hero p.lede{
+    margin-top:22px;
+    max-width:56ch;
+    font-size:17px;
+    color:var(--muted);
+  }
+  .hero .meta-row{
+    margin-top:36px;
+    display:flex; flex-wrap:wrap; gap:28px;
+  }
+  .meta-item{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .meta-item span{
+    display:block;
+    color:var(--text);
+    font-size:14px;
+    margin-top:4px;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{
+    padding:64px 0;
+    border-bottom:1px solid var(--line);
+  }
+  section .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    margin-bottom:36px;
+  }
+  section h2{
+    font-size:clamp(24px,3vw,32px);
+  }
+  .tag-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  /* ---------- Wat is het ---------- */
+  .split{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    align-items:start;
+  }
+  @media (max-width:760px){
+    .split{ grid-template-columns:1fr; }
+  }
+  .split p{ color:var(--muted); font-size:16px; }
+  .split p + p{ margin-top:14px; }
+  .stack-tags{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-top:20px;
+  }
+  .stack-tags span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--signal);
+    border:1px solid var(--signal-dim);
+    background:rgba(94,234,212,0.06);
+    padding:5px 10px;
+    border-radius:var(--radius);
+    letter-spacing:0.03em;
+  }
+
+  /* ---------- Doel: goal cards ---------- */
+  .goal-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media (max-width:640px){
+    .goal-grid{ grid-template-columns:1fr; }
+  }
+  .goal-card{
+    background:var(--panel);
+    padding:26px;
+  }
+  .goal-card .n{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--signal);
+    letter-spacing:0.08em;
+  }
+  .goal-card h3{
+    font-size:17px;
+    margin-top:10px;
+    margin-bottom:8px;
+  }
+  .goal-card p{
+    color:var(--muted);
+    font-size:14.5px;
+  }
+
+  /* ---------- Werkwijze: pipeline ---------- */
+  .pipeline{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .stage{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:20px;
+    padding:26px 0;
+    position:relative;
+  }
+  .stage:not(:last-child){ border-bottom:1px dashed var(--line); }
+  .stage-index{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--ink);
+    background:var(--signal);
+    width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%;
+    font-weight:500;
+  }
+  .stage h3{ font-size:17px; margin-bottom:6px; }
+  .stage p{ color:var(--muted); font-size:15px; max-width:60ch; }
+  .stage .pulse-line{
+    position:absolute;
+    left:16px; top:60px; bottom:-8px;
+    width:2px;
+    background:linear-gradient(var(--signal-dim), transparent);
+  }
+  .stage:last-child .pulse-line{ display:none; }
+
+  /* signature pipeline diagram */
+  .flow-diagram{
+    margin-top:44px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    padding:28px 22px;
+    overflow-x:auto;
+  }
+  .flow-row{
+    display:flex;
+    align-items:center;
+    gap:0;
+    min-width:640px;
+  }
+  .flow-node{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text);
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:10px 14px;
+    border-radius:var(--radius);
+    text-align:center;
+    white-space:nowrap;
+  }
+  .flow-node.source{ color:var(--muted); }
+  .flow-node.core{
+    border-color:var(--signal-dim);
+    color:var(--signal);
+  }
+  .flow-arrow{
+    flex:1;
+    height:1px;
+    background:var(--line);
+    position:relative;
+    min-width:28px;
+  }
+  .flow-arrow::after{
+    content:"";
+    position:absolute;
+    right:0; top:50%;
+    transform:translateY(-50%);
+    width:6px; height:6px;
+    border-top:1px solid var(--muted);
+    border-right:1px solid var(--muted);
+    transform:translateY(-50%) rotate(45deg);
+  }
+  .flow-arrow .dot{
+    position:absolute; top:50%; left:0;
+    width:5px; height:5px;
+    background:var(--signal);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 6px var(--signal);
+    animation:travel 2.6s linear infinite;
+  }
+  @keyframes travel{
+    0%{ left:0; opacity:0; }
+    10%{ opacity:1; }
+    90%{ opacity:1; }
+    100%{ left:100%; opacity:0; }
+  }
+  .flow-sources{
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .flow-cols{
+    display:grid;
+    grid-template-columns:auto 1fr auto 1fr auto;
+    align-items:center;
+    min-width:640px;
+    gap:0;
+  }
+
+  /* ---------- Oplevering ---------- */
+  .deliver-list{
+    display:grid;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .deliver-row{
+    background:var(--panel);
+    padding:20px 24px;
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:20px;
+    align-items:baseline;
+  }
+  @media (max-width:640px){
+    .deliver-row{ grid-template-columns:1fr; gap:6px; }
+  }
+  .deliver-row .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--signal);
+    letter-spacing:0.02em;
+  }
+  .deliver-row p{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Risico's ---------- */
+  .risk-list{
+    display:flex; flex-direction:column; gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .risk-row{
+    background:var(--panel);
+    padding:20px 24px;
+    display:grid;
+    grid-template-columns:26px 200px 1fr;
+    gap:18px;
+    align-items:start;
+  }
+  @media (max-width:700px){
+    .risk-row{ grid-template-columns:26px 1fr; }
+    .risk-row .label{ grid-column:2; }
+    .risk-row p{ grid-column:2; }
+  }
+  .risk-row .mark{
+    color:var(--warn);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    line-height:1.5;
+  }
+  .risk-row .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--warn);
+    letter-spacing:0.02em;
+  }
+  .risk-row p{ color:var(--muted); font-size:15px; }
+
+  section#risicos{ border-bottom:none; }
+  section#risicos .section-head .tag-num{ color:var(--warn); }
+  section#risicos .eyebrow::before{ background:var(--warn); box-shadow:0 0 8px var(--warn); }
+  section#risicos .eyebrow{ color:var(--warn); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:36px 0 60px;
+  }
+  footer .wrap{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:12px;
+  }
+  footer p{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">CRO<strong>ANALYTICS</strong> // intern</div>
+    <nav class="top-links">
+      <a href="#wat-is-het">Wat is het</a>
+      <a href="#doel">Doel</a>
+      <a href="#werkwijze">Werkwijze</a>
+      <a href="#oplevering">Oplevering</a>
+      <a href="#risicos">Risico's</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow">Marketing Analytics — CRO Reporting</div>
+    <h1>Van ruwe gedragsdata naar een <em>onderbouwd</em> CRO-besluit.</h1>
+    <p class="lede">Een intern tool dat data uit GA4/BigQuery, Contentsquare en Optimizely samenbrengt tot één leesbaar rapport — zodat elk optimalisatie-idee op bewijs staat, niet op onderbuik.</p>
+    <div class="meta-row">
+      <div class="meta-item">Status<span>In ontwikkeling</span></div>
+      <div class="meta-item">Databronnen<span>4 gekoppeld</span></div>
+      <div class="meta-item">Output<span>Streamlit dashboard</span></div>
+    </div>
+  </section>
+
+  <section id="wat-is-het" class="wrap reveal">
+    <div class="section-head">
+      <h2>Wat is het?</h2>
+      <span class="tag-num">01 / overview</span>
+    </div>
+    <div class="split">
+      <div>
+        <p>Een geautomatiseerde rapportagetool voor CRO-analyse. Het combineert kwantitatieve trafiek- en gedragsdata met experimentresultaten en kwalitatieve sessie-observaties, en zet dat om in een vast gestructureerd rapport met een AI-gegenereerde, leesbare samenvatting.</p>
+        <p>Geen los dashboard per databron, maar één synthese: wat zien we, waarom gebeurt het, en wat is de volgende test.</p>
+      </div>
+      <div>
+        <div class="stack-tags">
+          <span>BigQuery</span>
+          <span>GA4</span>
+          <span>Contentsquare</span>
+          <span>Optimizely</span>
+          <span>Web research</span>
+          <span>Streamlit</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="doel" class="wrap reveal">
+    <div class="section-head">
+      <h2>Wat is het doel?</h2>
+      <span class="tag-num">02 / rationale</span>
+    </div>
+    <div class="goal-grid">
+      <div class="goal-card">
+        <div class="n">GOAL·01</div>
+        <h3>Sneller van data naar besluit</h3>
+        <p>Minder tijd kwijt aan handmatig data verzamelen en rapporteren, meer tijd aan interpreteren en testen.</p>
+      </div>
+      <div class="goal-card">
+        <div class="n">GOAL·02</div>
+        <h3>Hypotheses onderbouwen</h3>
+        <p>Elk optimalisatie-idee koppelen aan gedrags- en experimentbewijs, in plaats van aannames.</p>
+      </div>
+      <div class="goal-card">
+        <div class="n">GOAL·03</div>
+        <h3>Consistente kwaliteit</h3>
+        <p>Elk rapport volgt dezelfde structuur en diepgang, onafhankelijk van wie het aanvraagt of samenstelt.</p>
+      </div>
+      <div class="goal-card">
+        <div class="n">GOAL·04</div>
+        <h3>Herbruikbare kennis</h3>
+        <p>Analyses worden herhaalbaar en deelbaar binnen het team, niet vastgeklikt in één persoon's hoofd.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="werkwijze" class="wrap reveal">
+    <div class="section-head">
+      <h2>Wat is de werkwijze?</h2>
+      <span class="tag-num">03 / pipeline</span>
+    </div>
+
+    <div class="pipeline">
+      <div class="stage">
+        <div class="stage-index">1</div>
+        <div>
+          <h3>Databronnen koppelen</h3>
+          <p>Verbinding met BigQuery (trafiek/conversie), Contentsquare (gedrag/frictie), Optimizely (experimenten) en aanvullende webbronnen.</p>
+        </div>
+        <div class="pulse-line"></div>
+      </div>
+      <div class="stage">
+        <div class="stage-index">2</div>
+        <div>
+          <h3>Verzamelen &amp; structureren</h3>
+          <p>Ruwe data wordt opgehaald en genormaliseerd naar één gemeenschappelijke structuur per onderzoeksvraag.</p>
+        </div>
+        <div class="pulse-line"></div>
+      </div>
+      <div class="stage">
+        <div class="stage-index">3</div>
+        <div>
+          <h3>Synthese &amp; patroonherkenning</h3>
+          <p>AI legt verbanden tussen kwantitatieve signalen en kwalitatieve observaties, en scoort kansrijke hypotheses.</p>
+        </div>
+        <div class="pulse-line"></div>
+      </div>
+      <div class="stage">
+        <div class="stage-index">4</div>
+        <div>
+          <h3>Rapport genereren</h3>
+          <p>Vaste templatestructuur wordt gevuld met een narratieve samenvatting, cijfers en onderbouwde aanbevelingen.</p>
+        </div>
+        <div class="pulse-line"></div>
+      </div>
+      <div class="stage">
+        <div class="stage-index">5</div>
+        <div>
+          <h3>Levering</h3>
+          <p>Rapport is toegankelijk via een gedeeld Streamlit-dashboard, klaar om te bespreken of direct te delen.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-diagram" aria-hidden="true">
+      <div class="flow-cols">
+        <div class="flow-node source">BigQuery</div>
+        <div class="flow-arrow"><div class="dot" style="animation-delay:0s"></div></div>
+        <div class="flow-node core">Synthese</div>
+        <div class="flow-arrow"><div class="dot" style="animation-delay:0.5s"></div></div>
+        <div class="flow-node">Rapport</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="oplevering" class="wrap reveal">
+    <div class="section-head">
+      <h2>Wat levert het op?</h2>
+      <span class="tag-num">04 / output</span>
+    </div>
+    <div class="deliver-list">
+      <div class="deliver-row">
+        <div class="label">STRUCTUUR</div>
+        <p>Een vast opgebouwd CRO-rapport: context, bevindingen, onderbouwing en aanbevolen vervolgstappen.</p>
+      </div>
+      <div class="deliver-row">
+        <div class="label">HYPOTHESES</div>
+        <p>Een lijst geprioriteerde testideeën, elk met een ICE-achtige inschatting van impact, zekerheid en inspanning.</p>
+      </div>
+      <div class="deliver-row">
+        <div class="label">TIJDSWINST</div>
+        <p>Rapportages die voorheen uren handmatig werk kostten, worden in minuten samengesteld.</p>
+      </div>
+      <div class="deliver-row">
+        <div class="label">HERHAALBAARHEID</div>
+        <p>Dezelfde vraag opnieuw stellen — bijvoorbeeld na een nieuwe testperiode — levert een vergelijkbaar, consistent rapport op.</p>
+      </div>
+      <div class="deliver-row">
+        <div class="label">TOEGANKELIJKHEID</div>
+        <p>Eén gedeeld dashboard in plaats van losse exports, sheets en slides per stakeholder.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="risicos" class="wrap reveal">
+    <div class="section-head">
+      <h2>Wat zijn de risico's?</h2>
+      <span class="tag-num">05 / caution</span>
+    </div>
+    <div class="risk-list">
+      <div class="risk-row">
+        <div class="mark">!</div>
+        <div class="label">AI-INTERPRETATIE</div>
+        <p>Gegenereerde samenvattingen kunnen patronen overtrekken of nuance missen — menselijke review blijft nodig vóór een rapport als besluitbasis dient.</p>
+      </div>
+      <div class="risk-row">
+        <div class="mark">!</div>
+        <div class="label">DATAKWALITEIT</div>
+        <p>De output is nooit beter dan de bron: trackingfouten of onvolledige Contentsquare/Optimizely-data vertalen zich direct naar foute conclusies.</p>
+      </div>
+      <div class="risk-row">
+        <div class="mark">!</div>
+        <div class="label">TOEGANG &amp; PRIVACY</div>
+        <p>Gekoppelde bronnen bevatten gevoelige bedrijfs- en gebruikersdata; toegangsrechten en dataminimalisatie moeten expliciet geregeld zijn.</p>
+      </div>
+      <div class="risk-row">
+        <div class="mark">!</div>
+        <div class="label">ONDERHOUD</div>
+        <p>API-koppelingen met BigQuery, Contentsquare en Optimizely vereisen onderhoud bij schema- of API-wijzigingen aan de brondiensten.</p>
+      </div>
+      <div class="risk-row">
+        <div class="mark">!</div>
+        <div class="label">GEEN VERVANGING VAN EXPERTISE</div>
+        <p>Het tool versnelt analyse, maar vervangt geen domeinkennis over de business, doelgroep of merkcontext bij het wegen van aanbevelingen.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Intern overzicht — CRO Marketing Analytics</p>
+    <p>Laatst bijgewerkt: augustus 2026</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll-reveal for sections — vanilla JS, no dependencies
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
