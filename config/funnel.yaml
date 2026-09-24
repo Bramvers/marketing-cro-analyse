@@ -1,0 +1,97 @@
+# Funnel configuration for the CRO analysis tool.
+# Everything the analysis needs to know about the funnel lives here — nothing is hardcoded.
+# Entries marked "TODO: bevestigen" are assumptions that still need confirmation.
+
+funnel:
+  # Counting unit: users (confirmed 2026-09-24).
+  counting_unit: users
+  # Open funnel: a user may enter at any step (confirmed 2026-09-24).
+  # Consequence: step N > step N-1 is possible and is reported as a warning, not an error.
+  funnel_type: open
+
+  # Ordered GA4 e-commerce steps.
+  steps:
+    - id: page_view
+      label: Landingspagina bekeken
+      ga4_event: page_view
+      # Only page_views on the product line's landing page count (see product_lines.*.landing_page_regex).
+      # TODO: bevestigen — assumption, see answer on question 3.
+      landing_page_only: true
+    - id: view_item
+      label: Product bekeken
+      ga4_event: view_item
+    - id: add_to_cart
+      label: Premie berekend
+      ga4_event: add_to_cart
+    - id: begin_checkout
+      label: Aanvraag gestart
+      ga4_event: begin_checkout
+    - id: add_payment_info
+      label: Betaalgegevens ingevuld
+      ga4_event: add_payment_info
+    - id: purchase
+      label: Afgesloten
+      ga4_event: purchase
+
+  # Micro-conversion = premieberekening = add_to_cart (confirmed 2026-09-24).
+  micro_conversion: add_to_cart
+  # Macro-conversion = purchase.
+  macro_conversion: purchase
+
+product_lines:
+  - id: auto
+    label: Autoverzekering
+    landing_page_regex: "^/verzekeringen/autoverzekering/?$"  # TODO: bevestigen
+    enabled: true
+  - id: woon
+    label: Woonverzekering
+    landing_page_regex: "^/verzekeringen/woonverzekering/?$"  # TODO: bevestigen
+    enabled: false
+  - id: reis
+    label: Reisverzekering
+    landing_page_regex: "^/verzekeringen/reisverzekering/?$"  # TODO: bevestigen
+    enabled: false
+  - id: fiets
+    label: Fietsverzekering
+    landing_page_regex: "^/verzekeringen/fietsverzekering/?$"  # TODO: bevestigen
+    enabled: false
+  - id: bromfiets
+    label: Bromfietsverzekering
+    landing_page_regex: "^/verzekeringen/bromfietsverzekering/?$"  # TODO: bevestigen
+    enabled: false
+
+segments:
+  device:
+    - id: mobile
+      label: Mobiel
+    - id: desktop
+      label: Desktop
+    - id: tablet
+      label: Tablet
+  # Based on the GA4 default channel grouping. TODO: bevestigen — ANWB-specific channels (member mailings, app)?
+  channel:
+    - id: sea
+      label: SEA (betaald zoeken)
+    - id: seo
+      label: SEO (organisch zoeken)
+    - id: direct
+      label: Direct
+    - id: email
+      label: E-mail
+    - id: paid_social
+      label: Paid social
+    - id: affiliate
+      label: Affiliate / vergelijker
+    - id: referral
+      label: Verwijzing
+  # Period granularity (confirmed 2026-09-24: per date).
+  period: date
+
+thresholds:
+  # Warn when a segment has fewer conversions than this at the macro-conversion step.
+  min_conversions: 100
+  # Significance level for segment comparisons.
+  alpha: 0.05
+  # Defaults for the power calculation in the measurement plan (phase 5).
+  power: 0.8
+  default_mde_relative: 0.05

@@ -1,0 +1,9 @@
+note_id,date,pillar,source,step,segment,observation,tags,product_line
+Q-001,2026-07-09,kwalitatief,usertest,view_item,device=mobile,4 van 6 mobiele deelnemers scrolden voorbij de hero zonder de knop 'Bereken je premie' te zien.,cta;mobiel;boven-de-vouw,auto
+Q-002,2026-07-11,kwalitatief,usertest,view_item,,Deelnemers wilden eerst een prijsindicatie zien voordat ze gegevens invulden.,prijsindicatie;verwachting,auto
+Q-003,2026-07-19,sitegedrag,sessierecording,view_item,channel=sea,Bezoekers vanuit SEA-advertenties 'vanaf € 25 p/m' zoeken dat bedrag op de landingspagina en haken af.,sea;verwachtingsmismatch;prijs,auto
+Q-004,2026-07-29,kwalitatief,survey,add_to_cart,,Exit-survey: 'Ik moest te veel invullen voordat ik een prijs zag' (18% van de antwoorden).,formulier;prijsindicatie,auto
+Q-005,2026-08-03,markt,marktonderzoek,page_view,,Drie van de vier grote concurrenten tonen een prijsindicatie boven de vouw op mobiel.,concurrentie;prijsindicatie,auto
+Q-006,2026-08-08,kwalitatief,usertest,page_view,,"Het ANWB-merk wekt vertrouwen, maar reviews en keurmerken worden op mobiel nauwelijks gezien.",trust;reviews;mobiel,auto
+Q-007,2026-08-26,kwalitatief,klantenservice,add_payment_info,,Piek in klantcontacten over een foutmelding bij het invullen van IBAN (week van 24 augustus).,betaling;bug;iban,auto
+Q-008,2026-08-31,sitegedrag,sessierecording,page_view,device=mobile,"Landingspagina laadt op mobiel traag (LCP ~3,8 s); rage clicks op de prijsindicatie tijdens het laden.",laadsnelheid;mobiel;rage-clicks,auto

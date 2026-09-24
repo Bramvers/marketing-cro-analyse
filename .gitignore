@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Data: real exports never go into git; only generated dummy data is committed
+data/*
+!data/dummy/
+
+# Streamlit / editors
+.streamlit/secrets.toml
+.vscode/
+.idea/

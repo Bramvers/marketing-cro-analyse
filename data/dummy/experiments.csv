@@ -1,0 +1,5 @@
+experiment_id,name,product_line,variant,is_control,metric,visitors,conversions,start_date,end_date,status
+AUTO-LP-012,Sticky CTA 'Bereken je premie' op mobiel,auto,controle,True,add_to_cart,41200,7089,2026-07-13,2026-08-09,concluded
+AUTO-LP-012,Sticky CTA 'Bereken je premie' op mobiel,auto,sticky_cta,False,add_to_cart,41050,7719,2026-07-13,2026-08-09,concluded
+AUTO-LP-015,Prijsindicatie boven de vouw,auto,controle,True,add_to_cart,9800,2296,2026-09-07,,running
+AUTO-LP-015,Prijsindicatie boven de vouw,auto,prijs_boven_vouw,False,add_to_cart,9760,2282,2026-09-07,,running
