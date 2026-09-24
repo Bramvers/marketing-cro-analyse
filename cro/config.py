@@ -18,6 +18,10 @@ class Option(BaseModel):
     label: str
 
 
+class ChannelOption(Option):
+    ga4_name: str  # value as it appears in GA4/BigQuery exports (default channel group)
+
+
 class FunnelStep(Option):
     ga4_event: str
     landing_page_only: bool = False
@@ -57,7 +61,7 @@ class Funnel(BaseModel):
 
 class Segments(BaseModel):
     device: list[Option]
-    channel: list[Option]
+    channel: list[ChannelOption]
     period: Literal["date", "week", "month"]
 
 

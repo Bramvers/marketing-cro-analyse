@@ -15,7 +15,7 @@ funnel:
       label: Landingspagina bekeken
       ga4_event: page_view
       # Only page_views on the product line's landing page count (see product_lines.*.landing_page_regex).
-      # TODO: bevestigen — assumption, see answer on question 3.
+      # Confirmed 2026-09-24.
       landing_page_only: true
     - id: view_item
       label: Product bekeken
@@ -41,23 +41,23 @@ funnel:
 product_lines:
   - id: auto
     label: Autoverzekering
-    landing_page_regex: "^/verzekeringen/autoverzekering/?$"  # TODO: bevestigen
+    landing_page_regex: "^/verzekeringen/autoverzekering/?$"
     enabled: true
   - id: woon
     label: Woonverzekering
-    landing_page_regex: "^/verzekeringen/woonverzekering/?$"  # TODO: bevestigen
+    landing_page_regex: "^/verzekeringen/woonverzekering/?$"  # TODO: bevestigen bij activeren
     enabled: false
   - id: reis
     label: Reisverzekering
-    landing_page_regex: "^/verzekeringen/reisverzekering/?$"  # TODO: bevestigen
+    landing_page_regex: "^/verzekeringen/reisverzekering/?$"  # TODO: bevestigen bij activeren
     enabled: false
   - id: fiets
     label: Fietsverzekering
-    landing_page_regex: "^/verzekeringen/fietsverzekering/?$"  # TODO: bevestigen
+    landing_page_regex: "^/verzekeringen/fietsverzekering/?$"  # TODO: bevestigen bij activeren
     enabled: false
   - id: bromfiets
     label: Bromfietsverzekering
-    landing_page_regex: "^/verzekeringen/bromfietsverzekering/?$"  # TODO: bevestigen
+    landing_page_regex: "^/verzekeringen/bromfietsverzekering/?$"  # TODO: bevestigen bij activeren
     enabled: false
 
 segments:
@@ -68,22 +68,65 @@ segments:
       label: Desktop
     - id: tablet
       label: Tablet
-  # Based on the GA4 default channel grouping. TODO: bevestigen — ANWB-specific channels (member mailings, app)?
+  # GA4 default channel grouping (confirmed 2026-09-24). ga4_name is the value in GA4/BigQuery exports.
   channel:
     - id: sea
       label: SEA (betaald zoeken)
+      ga4_name: Paid Search
     - id: seo
       label: SEO (organisch zoeken)
+      ga4_name: Organic Search
     - id: direct
       label: Direct
+      ga4_name: Direct
     - id: email
       label: E-mail
+      ga4_name: Email
     - id: paid_social
       label: Paid social
+      ga4_name: Paid Social
+    - id: organic_social
+      label: Organische social
+      ga4_name: Organic Social
     - id: affiliate
       label: Affiliate / vergelijker
+      ga4_name: Affiliates
     - id: referral
       label: Verwijzing
+      ga4_name: Referral
+    - id: display
+      label: Display
+      ga4_name: Display
+    - id: cross_network
+      label: Cross-network
+      ga4_name: Cross-network
+    - id: paid_shopping
+      label: Paid shopping
+      ga4_name: Paid Shopping
+    - id: organic_shopping
+      label: Organische shopping
+      ga4_name: Organic Shopping
+    - id: paid_video
+      label: Paid video
+      ga4_name: Paid Video
+    - id: organic_video
+      label: Organische video
+      ga4_name: Organic Video
+    - id: paid_other
+      label: Overig betaald
+      ga4_name: Paid Other
+    - id: audio
+      label: Audio
+      ga4_name: Audio
+    - id: sms
+      label: SMS
+      ga4_name: SMS
+    - id: mobile_push
+      label: Pushberichten
+      ga4_name: Mobile Push Notifications
+    - id: unassigned
+      label: Niet toegewezen
+      ga4_name: Unassigned
   # Period granularity (confirmed 2026-09-24: per date).
   period: date
 

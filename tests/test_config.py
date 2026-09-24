@@ -40,3 +40,11 @@ def test_micro_must_precede_macro():
     raw["funnel"]["micro_conversion"], raw["funnel"]["macro_conversion"] = "purchase", "add_to_cart"
     with pytest.raises(ValidationError, match="before"):
         AppConfig.model_validate(raw)
+
+
+def test_channels_follow_ga4_default_grouping():
+    config = load_config()
+    by_ga4 = {c.ga4_name: c.id for c in config.segments.channel}
+    assert by_ga4["Paid Search"] == "sea"
+    assert by_ga4["Organic Search"] == "seo"
+    assert len(by_ga4) == len(config.segments.channel)
