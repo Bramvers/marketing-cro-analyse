@@ -15,7 +15,7 @@ Productlijnen: Auto, Woon, Reis, Fiets, Bromfiets.
 - CRO-onderzoek rust op drie pijlers: eigen sitegedrag (GA4 + Contentsquare), kwalitatief onderzoek, marktonderzoek.
 
 ## Scope MVP
-- **Data-invoer via uploads**: CSV-exports (GA4/BigQuery, Contentsquare, Optimizely) en screenshots. Géén API-koppelingen in de MVP.
+- **Data-invoer via uploads**: CSV-exports (GA4/BigQuery, Contentsquare, Optimizely) en screenshots. Géén API-koppelingen in de MVP. Meerdere datasets op sessieniveau (bijv. sessiedata + ecommerce-data) koppelt de tool zelf op `session_id`, met controles op uniciteit, niet-matchende sessies en 1-op-n-relaties (zie Privacy & data).
 - Een **dummy-datagenerator** met realistische Auto-funnel data, inclusief een paar bewust ingebouwde patronen (bijv. hogere mobiele uitval op de landingspagina, lagere conversie vanuit SEA), zodat de hele pipeline zonder echte data te testen is.
 - Latere fase (niet nu bouwen, wel rekening mee houden): BigQuery live, Contentsquare-API, Optimizely-API. Ontwerp daarom een `sources/`-laag met één interface per bron, zodat een CSV-loader later vervangen kan worden door een API-loader.
 
@@ -49,9 +49,14 @@ tests/
 ```
 
 ## Privacy & data
-- Geen persoonsgegevens: alleen geaggregeerde data (sessies/gebruikers per stap, segment, periode).
-- Echte exports nooit in git (`data/` behalve `data/dummy/` in `.gitignore`).
-- Stuur naar de API alleen geaggregeerde, berekende resultaten — geen ruwe exports.
+- **Sessiedata mag, maar alleen lokaal en kortstondig** (besluit 2026-09-24, optie A). Uploads op sessieniveau (bijv. sessiedata + ecommerce-data, gekoppeld op `session_id`) zijn toegestaan. Pseudonieme ID's (`session_id`, `user_pseudo_id`) gelden als persoonsgegevens, dus:
+  - Ruwe sessierijen alleen in het geheugen van de lopende sessie: nooit naar schijf, nooit in git, nooit in logs of foutmeldingen.
+  - Direct na koppelen en valideren aggregeren (aantallen per stap, segment, periode). Alleen die aggregaten gaan verder de pipeline in (analyse, synthese, rapport).
+  - Geen directe persoonsgegevens (naam, e-mail, kenteken, postcode+huisnummer, IP) in uploads; kolommen die daarop lijken → upload weigeren met een duidelijke melding.
+  - Rapporten en exports bevatten nooit ID's of rijen op sessieniveau.
+- Echte exports nooit in git (`data/` behalve `data/dummy/` in `.gitignore`). Dummydata bevat alleen verzonnen ID's.
+- Stuur naar de API alleen geaggregeerde, berekende resultaten — nooit ruwe of sessiedata.
+- Sessiesleutel GA4: `ga_session_id` is alleen uniek per gebruiker; gebruik `user_pseudo_id` + `ga_session_id` als `session_id`.
 
 ## Werkafspraken
 - Werk in fases; stop na elke fase voor review. Kleine, afgeronde stappen boven grote halve.
