@@ -11,6 +11,8 @@ venv/
 # Data: real exports never go into git; only generated dummy data is committed
 data/*
 !data/dummy/
+# Query results belong in data/, never next to the queries
+sql/*.csv
 
 # Streamlit / editors
 .streamlit/secrets.toml
