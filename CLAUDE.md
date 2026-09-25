@@ -15,7 +15,7 @@ Productlijnen: Auto, Woon, Reis, Fiets, Bromfiets.
 - CRO-onderzoek rust op drie pijlers: eigen sitegedrag (GA4 + Contentsquare), kwalitatief onderzoek, marktonderzoek.
 
 ## Scope MVP
-- **Data-invoer via uploads**: CSV-exports (GA4/BigQuery, Contentsquare, Optimizely) en screenshots. Géén API-koppelingen in de MVP. Meerdere datasets op sessieniveau (bijv. sessiedata + ecommerce-data) koppelt de tool zelf op `session_id`, met controles op uniciteit, niet-matchende sessies en 1-op-n-relaties (zie Privacy & data).
+- **Data-invoer via uploads**: CSV-exports (GA4/BigQuery, Contentsquare, Optimizely) en screenshots. Géén API-koppelingen in de MVP. GA4-data komt **geaggregeerd** binnen: het koppelen van sessie- en ecommerce-data (op `session_id`) en het aggregeren gebeuren in BigQuery met een query die in deze repo staat (`sql/`). De tool ontvangt alleen aantallen per datum/periode × productlijn × stap × device × kanaal, plus controlegetallen van de koppeling (zie Privacy & data).
 - Een **dummy-datagenerator** met realistische Auto-funnel data, inclusief een paar bewust ingebouwde patronen (bijv. hogere mobiele uitval op de landingspagina, lagere conversie vanuit SEA), zodat de hele pipeline zonder echte data te testen is.
 - Latere fase (niet nu bouwen, wel rekening mee houden): BigQuery live, Contentsquare-API, Optimizely-API. Ontwerp daarom een `sources/`-laag met één interface per bron, zodat een CSV-loader later vervangen kan worden door een API-loader.
 
@@ -43,20 +43,22 @@ cro/
   synthesis/           # prompts + LLM-aanroepen, evidence-koppeling
   report/              # template + export (Markdown/HTML)
 config/funnel.yaml     # stappen, mapping, productlijnen
+sql/                   # BigQuery-queries: koppelen + aggregeren (draaien in BigQuery)
 data/dummy/            # gegenereerde testdata
 scripts/generate_dummy.py
 tests/
 ```
 
 ## Privacy & data
-- **Sessiedata mag, maar alleen lokaal en kortstondig** (besluit 2026-09-24, optie A). Uploads op sessieniveau (bijv. sessiedata + ecommerce-data, gekoppeld op `session_id`) zijn toegestaan. Pseudonieme ID's (`session_id`, `user_pseudo_id`) gelden als persoonsgegevens, dus:
-  - Ruwe sessierijen alleen in het geheugen van de lopende sessie: nooit naar schijf, nooit in git, nooit in logs of foutmeldingen.
-  - Direct na koppelen en valideren aggregeren (aantallen per stap, segment, periode). Alleen die aggregaten gaan verder de pipeline in (analyse, synthese, rapport).
-  - Geen directe persoonsgegevens (naam, e-mail, kenteken, postcode+huisnummer, IP) in uploads; kolommen die daarop lijken → upload weigeren met een duidelijke melding.
+- **Sessie- en eventdata blijven in BigQuery** (besluit 2026-09-25, optie C; vervangt optie A van 2026-09-24). Pseudonieme ID's (`session_id`, `user_id`, `user_pseudo_id`, `transaction_id`) gelden als persoonsgegevens en verlaten BigQuery niet, dus:
+  - Koppelen (sessiedata + ecommerce-data op `session_id`) en aggregeren gebeuren in de BigQuery-query. De tool ontvangt alleen aantallen per periode × segment × stap.
+  - Koppelcontroles (uniciteit van `session_id`, niet-matchende sessies, 1-op-n-relaties) doet de query ook; hij levert alleen de uitkomst als getallen aan.
+  - Unieke gebruikers zijn niet optelbaar over periodes: de query telt per gewenste periode (bijv. per dag én totaal); de tool telt dagtellingen nooit op tot unieke gebruikers.
+  - De tool accepteert geen uploads op sessie- of eventniveau: kolommen die op ID's of directe persoonsgegevens lijken (gebruikers-, sessie- of transactie-ID's, naam, e-mail, kenteken, postcode+huisnummer, IP, zoektermen, volledige URL's) → upload weigeren met een duidelijke melding.
   - Rapporten en exports bevatten nooit ID's of rijen op sessieniveau.
 - Echte exports nooit in git (`data/` behalve `data/dummy/` in `.gitignore`). Dummydata bevat alleen verzonnen ID's.
-- Stuur naar de API alleen geaggregeerde, berekende resultaten — nooit ruwe of sessiedata.
-- Sessiesleutel GA4: `ga_session_id` is alleen uniek per gebruiker; gebruik `user_pseudo_id` + `ga_session_id` als `session_id`.
+- Stuur naar de API alleen geaggregeerde, berekende resultaten — nooit ruwe of sessiedata. Dat geldt ook voor Claude Code tijdens de ontwikkeling: van echte exports alleen kolomnamen en structuur bekijken, geen rijen of ID's.
+- Sessiesleutel GA4 (in de query): `ga_session_id` is alleen uniek per gebruiker; gebruik `user_pseudo_id` + `ga_session_id` als `session_id`, tenzij de tabel al een aantoonbaar zo opgebouwde `session_id` heeft.
 
 ## Werkafspraken
 - Werk in fases; stop na elke fase voor review. Kleine, afgeronde stappen boven grote halve.
