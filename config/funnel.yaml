@@ -41,7 +41,7 @@ funnel:
 product_lines:
   - id: auto
     label: Autoverzekering
-    landing_page_regex: "^/verzekeringen/autoverzekering/?$"
+    landing_page_regex: "^/verzekeringen/autoverzekering/?$"  # confirmed 2026-09-25
     enabled: true
   - id: woon
     label: Woonverzekering
@@ -131,6 +131,7 @@ segments:
   period: date
 
 thresholds:
+  # All thresholds confirmed 2026-09-25.
   # Warn when a segment has fewer conversions than this at the macro-conversion step.
   min_conversions: 100
   # Significance level for segment comparisons.
